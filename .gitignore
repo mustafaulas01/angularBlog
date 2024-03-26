@@ -479,6 +479,11 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+API/appsettings.json
+API/appsettings.Development.json
 
 # Vim temporary swap files
 *.swp
+
+.appsettings.json
+
