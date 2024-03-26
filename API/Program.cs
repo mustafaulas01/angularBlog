@@ -1,3 +1,5 @@
+using API.BusinessLayer.Abstract;
+using API.BusinessLayer.Concrete;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,14 +8,18 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddScoped<ApplicationDbContext>();
+builder.Services.AddTransient<ICategoryService,CategoryManager>();
+
+
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
+
 var app = builder.Build();
-
-builder.Services.AddDbContext<ApplicationDbContext>();
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
