@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<ApplicationDbContext>();
-builder.Services.AddTransient<ICategoryService,CategoryManager>();
+builder.Services.AddScoped<ICategoryService,CategoryManager>();
 
 
 
