@@ -9,5 +9,6 @@ namespace API.BusinessLayer.Abstract
     public interface ICategoryService
     {
         Task<CategoryDto>CreateCategory(CreateCategoryDto categoryModel);
+        Task<List<CategoryDto>> GetCategoriesAsync();
     }
 }

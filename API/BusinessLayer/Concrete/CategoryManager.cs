@@ -6,6 +6,7 @@ using API.BusinessLayer.Abstract;
 using API.Data;
 using API.Models.Domain;
 using API.Models.DTO;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.BusinessLayer.Concrete
 {
@@ -36,6 +37,15 @@ namespace API.BusinessLayer.Concrete
          };
 
          return categoryDto;
+        }
+
+        public async Task<List<CategoryDto>> GetCategoriesAsync()
+        {
+            var categoriesDtoList= from cat in _context.Categories
+            select new CategoryDto {Id=cat.Id,Name=cat.Name,UrlHandle=cat.UrlHandle};
+            var categoryAsyncList=await categoriesDtoList.ToListAsync();
+
+            return categoryAsyncList;
         }
     }
 }

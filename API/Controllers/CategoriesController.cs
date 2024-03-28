@@ -31,5 +31,14 @@ namespace API.Controllers
 
          return Ok(categoryDto);
         }
+
+        [HttpGet] 
+        public async Task<IActionResult> GetAllCategories()
+        {
+            var categoryList=await _categoryService.GetCategoriesAsync();
+
+            return Ok(categoryList);
+
+        }
     }
 }
