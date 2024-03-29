@@ -4,6 +4,7 @@ import { AddCategoryRequest } from '../models/add-category-request.model';
 import { HttpClientModule } from '@angular/common/http';
 import { CategoryService } from '../services/category.service';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-category',
@@ -18,7 +19,7 @@ export class AddCategoryComponent implements OnDestroy {
 
   private addCategorySubscribtion?:Subscription
 
-  constructor(private categoryService:CategoryService) {
+  constructor(private categoryService:CategoryService,private router:Router) {
     this.model= {name:'',urlHandle:''}
   }
 
@@ -30,7 +31,7 @@ export class AddCategoryComponent implements OnDestroy {
   onFormSubmit() {
   
   this.addCategorySubscribtion=  this.categoryService.addCategory(this.model).subscribe({
-      next:(response)=>{console.log("Başarı ile Eklendi"+response)},
+      next:(response)=>{this.router.navigateByUrl('/admin/categories')},
       error:(error)=>{console.log("category add error:"+error);}
     })
   }
