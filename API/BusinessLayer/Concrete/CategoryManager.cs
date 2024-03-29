@@ -6,6 +6,7 @@ using API.BusinessLayer.Abstract;
 using API.Data;
 using API.Models.Domain;
 using API.Models.DTO;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.BusinessLayer.Concrete
@@ -39,6 +40,16 @@ namespace API.BusinessLayer.Concrete
          return categoryDto;
         }
 
+        public async Task<CategoryDto?> GetByCategoryIdAsync(Guid id)
+        {
+            var category=await _context.Categories.FirstOrDefaultAsync(a=>a.Id==id);
+
+            if(category!=null)
+            return  new CategoryDto() {Id=category.Id,Name=category.Name,UrlHandle=category.UrlHandle};
+            else 
+            return null;
+        }
+
         public async Task<List<CategoryDto>> GetCategoriesAsync()
         {
             var categoriesDtoList= from cat in _context.Categories
@@ -46,6 +57,23 @@ namespace API.BusinessLayer.Concrete
             var categoryAsyncList=await categoriesDtoList.ToListAsync();
 
             return categoryAsyncList;
+        }
+
+        public async Task<CategoryDto?> UpdateCategoryAsync(Guid id, CategoryUpdateDto categoryModel)
+        {
+            var category= await _context.Categories.FirstOrDefaultAsync(a=>a.Id==id);
+            if(category!=null)
+            {
+                category.Name=categoryModel.Name;
+                category.UrlHandle=categoryModel.UrlHandle;
+
+                await _context.SaveChangesAsync();
+
+                return new CategoryDto () {Id=category.Id,Name=categoryModel.Name,UrlHandle=category.UrlHandle};
+            }
+
+            return null;
+    
         }
     }
 }

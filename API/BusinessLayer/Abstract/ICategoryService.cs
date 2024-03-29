@@ -10,5 +10,9 @@ namespace API.BusinessLayer.Abstract
     {
         Task<CategoryDto>CreateCategory(CreateCategoryDto categoryModel);
         Task<List<CategoryDto>> GetCategoriesAsync();
+
+        Task<CategoryDto?> GetByCategoryIdAsync(Guid id);
+
+        Task<CategoryDto?> UpdateCategoryAsync(Guid id,CategoryUpdateDto categoryModel);
     }
 }
