@@ -14,5 +14,7 @@ namespace API.BusinessLayer.Abstract
         Task<CategoryDto?> GetByCategoryIdAsync(Guid id);
 
         Task<CategoryDto?> UpdateCategoryAsync(Guid id,CategoryUpdateDto categoryModel);
+
+        Task DeleteCategoryAsync(Guid id);
     }
 }

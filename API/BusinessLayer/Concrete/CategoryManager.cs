@@ -40,6 +40,17 @@ namespace API.BusinessLayer.Concrete
          return categoryDto;
         }
 
+        public async Task DeleteCategoryAsync(Guid id)
+        {
+             var category = await _context.Categories.FirstOrDefaultAsync(a=>a.Id==id);
+             if(category!=null)
+             {
+                _context.Categories.Remove(category);
+                await _context.SaveChangesAsync();
+             }
+            
+        }
+
         public async Task<CategoryDto?> GetByCategoryIdAsync(Guid id)
         {
             var category=await _context.Categories.FirstOrDefaultAsync(a=>a.Id==id);

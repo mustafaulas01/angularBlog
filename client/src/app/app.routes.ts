@@ -6,5 +6,5 @@ import { CategoryEditComponent } from './features/category/category-edit/categor
 export const routes: Routes = [
     {path:'admin/categories',title:"Categories",component:CategoryListComponent},
     {path:'admin/categories/add',title:"Category-Add",component:AddCategoryComponent},
-    {path:'admin/categories/:id',component:CategoryEditComponent}
+    {path:'admin/categories/:id',title:"Category-Edit",component:CategoryEditComponent}
 ];

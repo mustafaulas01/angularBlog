@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using API.BusinessLayer.Abstract;
 using API.Data;
@@ -66,6 +67,14 @@ namespace API.Controllers
              else
              return NotFound();
 
+        }
+
+       [HttpDelete]
+       [Route("{id:Guid}")]
+        public async Task<IActionResult>DeleteCategory([FromRoute] Guid id)
+        {
+            await _categoryService.DeleteCategoryAsync(id);
+            return Ok();
         }
         
     }
