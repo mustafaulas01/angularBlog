@@ -12,3 +12,4 @@ This Project was developed to work REST API with Angular
 * Alertify
 * Firebase Database
 * MSSQL Database
+* Microsoft Azure
