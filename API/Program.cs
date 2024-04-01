@@ -13,6 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<ApplicationDbContext>(options=>options.UseSqlServer(builder.Configuration.GetConnectionString("BlogAngularConnectionString")));
 
 builder.Services.AddScoped<ICategoryService,CategoryManager>();
+builder.Services.AddScoped<IBlogPostService,BlogPostManager>();
 builder.Services.AddScoped<DomainSettings>();
 
 var domainSettings=builder.Configuration.GetSection("DomainSettings").Get<DomainSettings>();
