@@ -11,3 +11,4 @@ This Project was developed to work REST API with Angular
 * Bootstrap 5.3.0
 * Alertify
 * Firebase Database
+* MSSQL Database
