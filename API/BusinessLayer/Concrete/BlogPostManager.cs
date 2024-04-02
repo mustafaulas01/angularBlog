@@ -38,7 +38,16 @@ namespace API.BusinessLayer.Concrete
             await  _context.BlogPosts.AddAsync(blog);
             await _context.SaveChangesAsync();
             
-           return new BlogPostDto() {Id=blog.Id,Title=blog.Title,ShortDescription=blog.ShortDescription,UrlHandle=blog.UrlHandle,FeatureImageUrl=blog.FeatureImageUrl,Author=blog.Author,Content=blog.Content,PublishedDate=blog.PublishedDate,IsVisible=blog.IsVisible}; 
+           return new BlogPostDto() {
+            Id=blog.Id,
+            Title=blog.Title,
+            ShortDescription=blog.ShortDescription,
+            UrlHandle=blog.UrlHandle,
+            FeatureImageUrl=blog.FeatureImageUrl,
+            Author=blog.Author,
+            Content=blog.Content,
+            PublishedDate=blog.PublishedDate,
+            IsVisible=blog.IsVisible}; 
         }
 
         public async Task<List<BlogPostDto>> GetAllBlogPosts()

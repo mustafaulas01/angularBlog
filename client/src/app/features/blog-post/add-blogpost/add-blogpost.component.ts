@@ -33,8 +33,8 @@ model:AddBlogPost;
    this.blogPostService.createBlogPost(this.model).subscribe({
 
     next:(response)=> {
-      console.log ("Eklenen Post:"+response);
-      //this.router.navigateByUrl("/admin/blogposts");
+      //console.log (response);
+      this.router.navigateByUrl("/admin/blogposts");
     }
    });
 

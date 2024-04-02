@@ -16,4 +16,8 @@ export class BlogPostService {
   {
    return this.http.post<BlogPost>(`${environment.apiBaseUrl}/api/blogpost`,model);
   }
+  getAllBlogPost():Observable<BlogPost[]>
+  {
+   return this.http.get<BlogPost []>(`${environment.apiBaseUrl}/api/blogpost`);
+  }
 }

@@ -28,5 +28,14 @@ namespace API.Controllers
 
             return NotFound();
         }
+        
+        [HttpGet]
+        public async Task<IActionResult>GetAllBlogPosts() 
+        {
+            var blogList=await _blogService.GetAllBlogPosts();
+            
+            return Ok(blogList);
+
+        }
     }
 }
