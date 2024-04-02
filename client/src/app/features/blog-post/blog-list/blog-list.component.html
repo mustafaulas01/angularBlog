@@ -6,14 +6,14 @@
     </div>
 
 <ng-container *ngIf="blogPost$ | async as blogPosList">
-    <table border="1">
+    <table class="table table-bordered mt-3">
         <thead>
             <tr>
                 <th>Title</th>
                 <th>Short Description</th>
                 <th>Url Handle</th>
                 <th>FeatureImage</th>
-                <th>Author</th>
+        
                 <th>Published Date</th>
                 <th>Is Visible</th>
             </tr>
@@ -24,8 +24,8 @@
             <td>{{item.shortDescription}}</td>
             <td>{{item.urlHandle}}</td>
             <td>{{item.featureImageUrl}}</td>
-            <td>{{item.author}}</td>
-            <td>{{item.publishedDate}}</td>
+
+            <td>{{item.publishedDate | date: 'yyy-MM-dd'}}</td>
             <td>{{item.isVisible}}</td>
             </tr>
         </tbody>
