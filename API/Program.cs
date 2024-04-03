@@ -10,7 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 //builder.Services.AddScoped<ApplicationDbContext>();
-builder.Services.AddDbContext<ApplicationDbContext>(options=>options.UseSqlServer(builder.Configuration.GetConnectionString("BlogAngularConnectionString")));
+builder.Services.AddDbContext<ApplicationDbContext>(options=>options.
+UseSqlServer(builder.Configuration.GetConnectionString("BlogAngularConnectionString")).UseLazyLoadingProxies());
 
 builder.Services.AddScoped<ICategoryService,CategoryManager>();
 builder.Services.AddScoped<IBlogPostService,BlogPostManager>();

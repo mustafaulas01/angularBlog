@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using API.BusinessLayer.Abstract;
 using API.Models.DTO;
@@ -32,9 +33,28 @@ namespace API.Controllers
         [HttpGet]
         public async Task<IActionResult>GetAllBlogPosts() 
         {
+        
             var blogList=await _blogService.GetAllBlogPosts();
-            
-            return Ok(blogList);
+            if(blogList.Any())
+            {
+             return Ok(blogList);
+            }
+           
+            else return NotFound();
+
+        }
+
+        [HttpGet]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> GetBlogPostById([FromRoute] Guid id)
+        {
+            var blogpost= await _blogService.GetPostByIdAsync(id);
+
+            if(blogpost!=null)
+            return Ok(blogpost);
+
+            else 
+            return NotFound();
 
         }
     }

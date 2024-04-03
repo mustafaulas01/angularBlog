@@ -13,6 +13,8 @@ namespace API.BusinessLayer.Abstract
       Task<BlogPostDto> CreateBlogPostAsync(CreateBlogDto model);
 
       Task<List<BlogPostDto>> GetAllBlogPosts();
+
+      Task<BlogPostDto>GetPostByIdAsync(Guid id);
     
 
     }

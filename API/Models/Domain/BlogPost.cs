@@ -18,6 +18,8 @@ namespace API.Models.Domain
     public string Author { get; set; }
 
     public bool IsVisible { get; set; }
+
+    public virtual List<Category> Categories { get; set; }=new List<Category>();
         
     }
 }

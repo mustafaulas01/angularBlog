@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240326115637_First  Migrate")]
-    partial class FirstMigrate
+    [Migration("20240403091148_laz_loading has been added")]
+    partial class laz_loadinghasbeenadded
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,6 +21,9 @@ namespace API.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -83,6 +86,36 @@ namespace API.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("BlogPostCategory", b =>
+                {
+                    b.Property<Guid>("BlogPostsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CategoriesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("BlogPostsId", "CategoriesId");
+
+                    b.HasIndex("CategoriesId");
+
+                    b.ToTable("BlogPostCategory");
+                });
+
+            modelBuilder.Entity("BlogPostCategory", b =>
+                {
+                    b.HasOne("API.Models.Domain.BlogPost", null)
+                        .WithMany()
+                        .HasForeignKey("BlogPostsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("API.Models.Domain.Category", null)
+                        .WithMany()
+                        .HasForeignKey("CategoriesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

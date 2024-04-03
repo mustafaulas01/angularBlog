@@ -53,7 +53,7 @@ namespace API.BusinessLayer.Concrete
 
         public async Task<CategoryDto?> GetByCategoryIdAsync(Guid id)
         {
-            var category=await _context.Categories.FirstOrDefaultAsync(a=>a.Id==id);
+            var category=await _context.Categories.AsNoTracking().FirstOrDefaultAsync(a=>a.Id==id);
 
             if(category!=null)
             return  new CategoryDto() {Id=category.Id,Name=category.Name,UrlHandle=category.UrlHandle};
