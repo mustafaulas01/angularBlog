@@ -9,6 +9,7 @@ import { CategoryService } from '../../category/services/category.service';
 import { Category } from '../../category/models/category';
 import { UpdateBlogPost } from '../models/update-blog-post.model';
 import { ImageSelectorComponent } from '../../../shared/components/image-selector/image-selector.component';
+import { ImageService } from '../../../shared/components/image-selector/image.service';
 
 @Component({
   selector: 'app-edit-blog',
@@ -23,6 +24,8 @@ export class EditBlogComponent implements OnInit, OnDestroy {
   routeSubsciption?:Subscription;
   blogUpdateSubscription?:Subscription;
   getBlogSubsription?:Subscription;
+  imageChangeSubsription?:Subscription;
+
   model?:BlogPost;
   categories$? : Observable<Category []>;
 
@@ -30,12 +33,14 @@ export class EditBlogComponent implements OnInit, OnDestroy {
   selectedCategories?:string []
 
    constructor(private route:ActivatedRoute,private blogPostService:BlogPostService,
-    private categoriService:CategoryService,private router:Router) {}
+    private categoriService:CategoryService,private router:Router,
+  private imageService:ImageService) {}
 
   ngOnDestroy(): void {
   this.routeSubsciption?.unsubscribe();
   this.blogUpdateSubscription?.unsubscribe();
   this.getBlogSubsription?.unsubscribe();
+  this.imageChangeSubsription?.unsubscribe();
   }
 
   ngOnInit(): void {
@@ -46,12 +51,27 @@ export class EditBlogComponent implements OnInit, OnDestroy {
         this.id = response.get('id');
 
         if (this.id)
-        this.getBlogSubsription=  this.blogPostService.getBlogPostById(this.id).subscribe({
-            next: (response) => {
-            this.model=response;
-            this.selectedCategories=response.categories.map(x=>x.id);
+          {
+            this.getBlogSubsription=  this.blogPostService.getBlogPostById(this.id).subscribe({
+              next: (response) => {
+              this.model=response;
+              this.selectedCategories=response.categories.map(x=>x.id);
+              }
+            });
+          }
+         
+        this.imageChangeSubsription=  this.imageService.onSelectImage().subscribe({
+            next:(response)=> {
+              if(this.model)
+                {
+                  this.model.featureImageUrl=response.url;
+                  this.isImageSelectorVisible=false;
+                }
             }
-          });
+          })
+          
+
+
       }
     })
   }

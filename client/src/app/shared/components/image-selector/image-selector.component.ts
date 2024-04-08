@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Component, OnInit, ViewChild, viewChild } from '@angular/core';
+import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { ImageService } from './image.service';
 import { Observable } from 'rxjs';
 import { BlogImage } from '../../models/blogimage.model';
@@ -18,6 +18,8 @@ private file ?:File;
 fileName:string='';
 title:string='';
 images$?:Observable<BlogImage[]>;
+
+@ViewChild('form', {static:false}) imageUploadForm?:NgForm;
 
 constructor (private imageService:ImageService) {}
 
@@ -38,7 +40,8 @@ constructor (private imageService:ImageService) {}
       this.imageService.uploadImage(this.file, this.fileName, this.title).subscribe(
         {
           next: (response) => {
-            console.log(this.getImages());
+           
+            this.imageUploadForm?.resetForm();
             this.getImages();
           }
         }
@@ -50,6 +53,10 @@ constructor (private imageService:ImageService) {}
   private getImages()
   {
     this.images$= this.imageService.getAllImages();
+  }
+
+ selectImage(image:BlogImage):void {
+ this.imageService.selectImage(image);
   }
 
 }
