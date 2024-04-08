@@ -29,7 +29,7 @@
             <td>{{item.featureImageUrl}}</td>
 
             <td>{{item.publishedDate | date: 'yyy-MM-dd'}}</td>
-            <td>{{item.isVisible}}</td>
+            <td>{{item.isVisible | yesNo}}</td>
             <td><a class="btn btn-light" [routerLink]="['/admin/blogposts',item.id]">Edit</a></td>
             </tr>
         </tbody>

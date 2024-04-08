@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using API.BusinessLayer.Abstract;
 using API.Data;
@@ -72,10 +73,30 @@ namespace API.BusinessLayer.Concrete
             }; 
         }
 
+        public async Task DeleteBlogPost(Guid id)
+        {
+             var blog = await _context.BlogPosts.FirstOrDefaultAsync(a => a.Id == id);
+             if(blog!=null)
+             {
+             var blogCount=blog.Categories.Count;
+
+             blog.Categories.RemoveRange(0,blogCount);
+             await _context.SaveChangesAsync();
+
+            
+              await Task.Run(()=>{  _context.BlogPosts.Remove(blog);} );
+              await _context.SaveChangesAsync();
+             }
+
+    
+
+        }
+
         public async Task<List<BlogPostDto>> GetAllBlogPosts()
         {
             var list= await (from bl in _context.BlogPosts select new BlogPostDto { Id=bl.Id,Title=bl.Title,Content=bl.Content,UrlHandle=bl.UrlHandle,
             FeatureImageUrl=bl.FeatureImageUrl,Author=bl.Author,ShortDescription=bl.ShortDescription,
+            IsVisible=bl.IsVisible,
             PublishedDate=bl.PublishedDate,Categories=bl.Categories.Select(a=>new CategoryDto{Id=a.Id,Name=a.Name,UrlHandle=a.UrlHandle}).ToList()  }).ToListAsync();
            
             
@@ -83,20 +104,6 @@ namespace API.BusinessLayer.Concrete
 
            return list;
         }
-
-
-    //  public Guid Id { get; set; }
-    // public string Title { get; set; }
-    // public string ShortDescription { get; set; }
-    // public string Content { get; set; }
-    // public string  FeatureImageUrl { get; set; }
-    // public string UrlHandle { get; set; }
-    // public DateTime PublishedDate { get; set; }
-    // public string Author { get; set; }
-
-    // public bool IsVisible { get; set; }
-
-    // public List<CategoryDto> Categories { get; set; } = new List<CategoryDto>();
 
 
         public async Task<BlogPostDto> GetPostByIdAsync(Guid id)
@@ -114,7 +121,8 @@ namespace API.BusinessLayer.Concrete
                     FeatureImageUrl = blog.FeatureImageUrl,
                     UrlHandle = blog.UrlHandle,
                     PublishedDate = blog.PublishedDate,
-                    Author = blog.Author
+                    Author = blog.Author,
+                    IsVisible=blog.IsVisible
 
                 };
 
@@ -128,6 +136,64 @@ namespace API.BusinessLayer.Concrete
             else 
             return null;
 
+        }
+
+        public async Task<BlogPostDto> UpdateBlogPost(Guid id, UpdateBlogPostDto model)
+        {
+            var blog = await _context.BlogPosts.FirstOrDefaultAsync(a => a.Id == id);
+
+            if (blog != null)
+            {
+                blog.Title = model.Title;
+                blog.Author = model.Author;
+                blog.ShortDescription = model.ShortDescription;
+                blog.Content = model.Content;
+                blog.UrlHandle = model.UrlHandle;
+                blog.FeatureImageUrl = model.FeatureImageUrl;
+                blog.IsVisible = model.IsVisible;
+                blog.PublishedDate = model.PublishedDate;
+
+                await _context.SaveChangesAsync();
+                
+
+                blog.Categories.RemoveRange(0,blog.Categories.Count);
+
+                 await _context.SaveChangesAsync();
+                          
+
+                foreach (var cat in model.Categories)
+                {
+                    var categor = await _context.Categories.FirstOrDefaultAsync(a => a.Id == cat);
+                    if (categor != null)
+                    {
+                     
+                            blog.Categories.Add(categor);
+                            await _context.SaveChangesAsync();
+                        
+                    }
+
+                }
+
+                var blogDto = new BlogPostDto()
+                {
+                    Id = blog.Id,
+                    Title=blog.Title,
+                    Author = blog.Author,
+                    ShortDescription = blog.ShortDescription,
+                    Content = blog.Content,
+                    UrlHandle = blog.UrlHandle,
+                    FeatureImageUrl = blog.FeatureImageUrl,
+                    IsVisible = blog.IsVisible,
+                    PublishedDate = blog.PublishedDate,
+                    Categories = blog.Categories.Select(a => new CategoryDto { Id = a.Id, Name = a.Name, UrlHandle = a.UrlHandle }).ToList()
+
+                };
+
+                return blogDto;
+
+            }
+
+              else return null;
         }
     }
 }

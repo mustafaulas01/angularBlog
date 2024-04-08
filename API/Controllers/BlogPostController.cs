@@ -57,5 +57,28 @@ namespace API.Controllers
             return NotFound();
 
         }
+
+       [HttpPut]
+       [Route("{id:Guid}")]
+        public async Task<IActionResult> UpdateBlogPost([FromRoute] Guid id,[FromBody] UpdateBlogPostDto model)
+        {
+            var blogpost=await _blogService.UpdateBlogPost(id,model);
+
+            if(blogpost!=null)
+            return Ok(blogpost);
+
+            else return NotFound();
+
+
+        }
+
+
+        [HttpDelete]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> DeleteBlogPost([FromRoute] Guid id)
+        {
+            await _blogService.DeleteBlogPost(id);
+            return Ok();
+        }
     }
 }

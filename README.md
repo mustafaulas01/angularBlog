@@ -2,7 +2,7 @@
 This project was generated with Angular CLI version 17.2.10.
 
 ## Purpose
-This Project was developed to work REST API with Angular
+This Project was developed to work REST API with Angular.
 
 ## Used Technologies
 * .NETCORE 8.0
@@ -12,4 +12,4 @@ This Project was developed to work REST API with Angular
 * Alertify
 * Firebase Database
 * MSSQL Database
-* Microsoft Azure
+* Microsoft Azure Cloud and Storage

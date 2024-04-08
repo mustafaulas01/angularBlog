@@ -68,7 +68,7 @@ export class CategoryEditComponent implements OnInit, OnDestroy {
   }
 
   onDelete(): void {
-    console.log("id:"+this.id);
+
     if (this.id)
   
       this.categoryService.deleteCategory(this.id).subscribe({
