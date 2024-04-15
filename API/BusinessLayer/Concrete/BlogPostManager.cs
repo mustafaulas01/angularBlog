@@ -138,6 +138,38 @@ namespace API.BusinessLayer.Concrete
 
         }
 
+        public async Task<BlogPostDto> GetPostByUrlAsync(string urlHandle)
+        {
+           
+              var blog = await _context.BlogPosts.FirstOrDefaultAsync(a => a.UrlHandle == urlHandle);
+
+            if (blog != null)
+            {
+                var blogDto = new BlogPostDto()
+                {
+                    Id = blog.Id,
+                    Title = blog.Title,
+                    ShortDescription = blog.ShortDescription,
+                    Content = blog.Content,
+                    FeatureImageUrl = blog.FeatureImageUrl,
+                    UrlHandle = blog.UrlHandle,
+                    PublishedDate = blog.PublishedDate,
+                    Author = blog.Author,
+                    IsVisible=blog.IsVisible
+
+                };
+
+                foreach (var cat in blog.Categories)
+                {
+                    blogDto.Categories.Add(new CategoryDto() { Id = cat.Id, Name = cat.Name, UrlHandle = cat.UrlHandle });
+                }
+              return blogDto;
+            }
+
+            else 
+            return null;
+        }
+
         public async Task<BlogPostDto> UpdateBlogPost(Guid id, UpdateBlogPostDto model)
         {
             var blog = await _context.BlogPosts.FirstOrDefaultAsync(a => a.Id == id);

@@ -15,6 +15,8 @@ namespace API.BusinessLayer.Abstract
       Task<List<BlogPostDto>> GetAllBlogPosts();
 
       Task<BlogPostDto>GetPostByIdAsync(Guid id);
+
+      Task<BlogPostDto>GetPostByUrlAsync(string urlHandle);
       
       Task<BlogPostDto>UpdateBlogPost(Guid id,UpdateBlogPostDto model);
 

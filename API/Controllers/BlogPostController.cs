@@ -58,6 +58,22 @@ namespace API.Controllers
 
         }
 
+        [HttpGet]
+        [Route("{urlHandle}")]
+        public async Task<IActionResult>GetBlogPostByUrlHandle([FromRoute] string urlHandle)
+        {
+                var blogpost= await _blogService.GetPostByUrlAsync(urlHandle);
+
+            if(blogpost!=null)
+            return Ok(blogpost);
+
+            else 
+            return NotFound();
+            
+        } 
+
+
+
        [HttpPut]
        [Route("{id:Guid}")]
         public async Task<IActionResult> UpdateBlogPost([FromRoute] Guid id,[FromBody] UpdateBlogPostDto model)
