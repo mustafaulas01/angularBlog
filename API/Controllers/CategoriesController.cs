@@ -8,6 +8,7 @@ using API.BusinessLayer.Abstract;
 using API.Data;
 using API.Models.Domain;
 using API.Models.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -35,6 +36,7 @@ namespace API.Controllers
         }
 
         [HttpGet] 
+        [Authorize]
         public async Task<IActionResult> GetAllCategories()
         {
             var categoryList=await _categoryService.GetCategoriesAsync();
