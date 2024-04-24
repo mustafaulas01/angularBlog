@@ -30,6 +30,7 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("BlogAngularConne
 builder.Services.AddScoped<ICategoryService,CategoryManager>();
 builder.Services.AddScoped<IBlogPostService,BlogPostManager>();
 builder.Services.AddScoped<IImageService,ImageManager>();
+builder.Services.AddScoped<ITokenService,TokenManager>();   
 builder.Services.AddScoped<DomainSettings>();
 
 builder.Services.AddIdentityCore<IdentityUser>()

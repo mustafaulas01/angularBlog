@@ -27,6 +27,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> CreateCategory([FromBody]CreateCategoryDto model)
         {
          
@@ -36,7 +37,6 @@ namespace API.Controllers
         }
 
         [HttpGet] 
-        [Authorize]
         public async Task<IActionResult> GetAllCategories()
         {
             var categoryList=await _categoryService.GetCategoriesAsync();
@@ -60,6 +60,7 @@ namespace API.Controllers
 
         [HttpPut]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult>UpdateCategory([FromRoute] Guid id,CategoryUpdateDto categoryModel)
         {
             var categoryDto= await _categoryService.UpdateCategoryAsync(id,categoryModel);
@@ -73,6 +74,7 @@ namespace API.Controllers
 
        [HttpDelete]
        [Route("{id:Guid}")]
+       [Authorize(Roles = "Writer")]
         public async Task<IActionResult>DeleteCategory([FromRoute] Guid id)
         {
             await _categoryService.DeleteCategoryAsync(id);

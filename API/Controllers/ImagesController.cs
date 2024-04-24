@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using API.BusinessLayer.Abstract;
 using API.Models.Domain;
 using API.Models.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -24,6 +25,8 @@ namespace API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Writer")]
+    
         public async Task<IActionResult> UploadImage([FromForm] IFormFile file, [FromForm] string fileName, [FromForm] string title)
         {
             ValidateFileUpload(file);

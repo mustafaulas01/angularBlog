@@ -5,6 +5,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using API.BusinessLayer.Abstract;
 using API.Models.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -20,6 +21,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> CreateBlog([FromBody] CreateBlogDto model)
         {
             var blog= await _blogService.CreateBlogPostAsync(model);
@@ -76,6 +78,7 @@ namespace API.Controllers
 
        [HttpPut]
        [Route("{id:Guid}")]
+       [Authorize(Roles = "Writer")]
         public async Task<IActionResult> UpdateBlogPost([FromRoute] Guid id,[FromBody] UpdateBlogPostDto model)
         {
             var blogpost=await _blogService.UpdateBlogPost(id,model);
@@ -91,6 +94,7 @@ namespace API.Controllers
 
         [HttpDelete]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> DeleteBlogPost([FromRoute] Guid id)
         {
             await _blogService.DeleteBlogPost(id);
