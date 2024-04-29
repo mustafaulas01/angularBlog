@@ -26,7 +26,7 @@ export class ImageService {
     formData.append('fileName',fileName);
     formData.append('title',title);
    
-   return this.http.post<BlogImage>(`${environment.apiBaseUrl}/api/images`,formData);
+   return this.http.post<BlogImage>(`${environment.apiBaseUrl}/api/images?addAuth=true`,formData);
 
   }
 

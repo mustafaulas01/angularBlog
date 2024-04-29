@@ -37,12 +37,9 @@ namespace API.Controllers
         {
         
             var blogList=await _blogService.GetAllBlogPosts();
-            if(blogList.Any())
-            {
+         
              return Ok(blogList);
-            }
-           
-            else return NotFound();
+        
 
         }
 
@@ -56,7 +53,7 @@ namespace API.Controllers
             return Ok(blogpost);
 
             else 
-            return NotFound();
+            return NoContent();
 
         }
 
@@ -70,7 +67,7 @@ namespace API.Controllers
             return Ok(blogpost);
 
             else 
-            return NotFound();
+            return null;
             
         } 
 

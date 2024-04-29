@@ -65,10 +65,8 @@ namespace API.Controllers
         {
             var categoryDto= await _categoryService.UpdateCategoryAsync(id,categoryModel);
 
-            if(categoryDto!=null)
              return Ok(categoryDto);
-             else
-             return NotFound();
+           
 
         }
 

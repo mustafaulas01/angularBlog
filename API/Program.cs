@@ -92,7 +92,7 @@ var app = builder.Build();
 
 
 app.UseCors(options=>options.WithOrigins(domainSettings.ClientDomain).AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
-
+app.UseRouting();
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();

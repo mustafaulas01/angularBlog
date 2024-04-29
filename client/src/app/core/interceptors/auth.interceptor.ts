@@ -16,7 +16,11 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
     const authRequest = req.clone({
       setHeaders: {
-        'Authorization': cookieService.get('Authorization')
+        'Authorization': cookieService.get('Authorization'),
+        'content-type':'application/json',
+        'Access-Control-Allow-Origin':'*',
+        'Access-Control-Allow-Methods':'POST,GET,PUT,PATCH,DELETE,OPTIONS',
+        'Access-Control-Allow-Credentials':'true'
       }
     });
 
